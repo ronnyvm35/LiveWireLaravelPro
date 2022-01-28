@@ -14,8 +14,16 @@ class CreatePedidosModelsTable extends Migration
     public function up()
     {
         Schema::create('pedidos_models', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->integer('user_id')->nullable();
+            $table->date('fecha')->nullable();
+            $table->float('costo')->nullable();
+            $table->time('hora')->nullable();
             $table->timestamps();
+
+            $table->integer('pizza_id')->unsigned();
+            $table->foreign('pizza_id')->references('id')->on('pizza_models');
+
         });
     }
 

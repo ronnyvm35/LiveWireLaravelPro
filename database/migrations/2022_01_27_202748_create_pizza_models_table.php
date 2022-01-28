@@ -14,7 +14,11 @@ class CreatePizzaModelsTable extends Migration
     public function up()
     {
         Schema::create('pizza_models', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->string('nombre');
+            $table->string('descripcion');
+            $table->boolean('estado');
+            $table->float('costo');
             $table->timestamps();
         });
     }

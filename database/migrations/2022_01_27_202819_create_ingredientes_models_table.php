@@ -14,7 +14,9 @@ class CreateIngredientesModelsTable extends Migration
     public function up()
     {
         Schema::create('ingredientes_models', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->string('nombre');
+            $table->boolean('estado');
             $table->timestamps();
         });
     }
