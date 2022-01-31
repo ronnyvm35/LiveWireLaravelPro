@@ -1,6 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Pizza;
+use App\Http\Livewire\Ingredientes;
+use App\Http\Livewire\PizzaIngredientes;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,14 +16,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes(); 
-Route::get('{any}', function () {
-    return view('home');
-})->where('any', '.*');
+Auth::routes();
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
-/*  Auth::routes(); 
-    Route::get('/', function () {
-        return view('home');
-    });
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-*/
+Route::any('/', function () {
+    return view('dashboard');
+})->middleware('auth');
+
+Route::get('/Pizza', Pizza::class)->middleware('auth');
+Route::get('/Ingredientes', Ingredientes::class)->middleware('auth');
+
+Route::get('/ArmaTuPizza', PizzaIngredientes::class)->middleware('auth');

@@ -1,0 +1,1 @@
+<b>{{ $exception->getMessage() }}</b>

@@ -41,6 +41,14 @@ return [
 
     'debug' => (bool) env('APP_DEBUG', false),
 
+    'log' => env('APP_LOG', 'single'),
+
+    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+
+    'Barryvdh\Debugbar\ServiceProvider',
+
+'Debugbar' => 'Barryvdh\Debugbar\Facade',
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -80,7 +88,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +101,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +114,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'es_es',
 
     /*
     |--------------------------------------------------------------------------
@@ -174,6 +182,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
+        App\Providers\JetstreamServiceProvider::class,
 
     ],
 

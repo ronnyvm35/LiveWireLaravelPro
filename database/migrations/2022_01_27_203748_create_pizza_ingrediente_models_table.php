@@ -14,9 +14,9 @@ class CreatePizzaIngredienteModelsTable extends Migration
     public function up()
     {
         Schema::create('pizza_ingrediente_models', function (Blueprint $table) {
-            $table->increments('id'); 
+            $table->increments('id');
             $table->boolean('extra');
-            $table->float('value');
+            $table->float('valor');
             $table->timestamps();
 
             $table->integer('pizza_id')->unsigned();
