@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use App\Models\PizzaIngredienteModel;
 use App\Models\PizzaModel;
 use App\Models\IngredientesModel;
@@ -10,7 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class PizzaIngredientes extends Component
 {
-    public $pizza, $extra, $valor , $pizzasI, $pizza_id, $ingrediente_id, $estado, $pi_id;
+    use WithFileUploads;
+    public $pizza, $extra, $valor , $pizzasI, $pizza_id, $ingrediente_id, $estado, $pi_id, $costo, $imagen, $ingredientes;
     public $isModalOpen = 0;
 
     public function render()
@@ -26,7 +28,7 @@ class PizzaIngredientes extends Component
 
         return view('livewire.pizza-ingredientes');
     }
-
+ 
     public function create()
     {
         $this->resetCreateForm();
@@ -54,7 +56,7 @@ class PizzaIngredientes extends Component
     }
 
     public function store()
-    {
+    {  
         $this->validate([
             'nombre' => 'required',
             'descripcion' => 'required',
@@ -62,29 +64,38 @@ class PizzaIngredientes extends Component
             'pizza_id' => 'required',
             'extra' => 'required',
             'ingrediente_id' => 'required',
+            'imagen.*' => 'image|max:1024', // 1MB Max
         ]);
+        
+        $this->imagen->store('imagen');
+
         DB::beginTransaction();
         try {
 
-            PizzaIngredienteModel::updateOrCreate(['id' => $this->pizza_id], [
-                'extra' => $this->extra,
-                'valor' => $this->valor,
-                'pizza_id' => $this->pizza_id,
-                'ingrediente_id' => $this->ingrediente_id,
-            ]);
+            $this->imagen = json_encode($this->imagen);  
 
             PizzaModel::updateOrCreate(['id' => $this->pizza_id], [
                 'nombre' => $this->nombre,
                 'descripcion' => $this->descripcion,
                 'estado' => true,
+                'imagen' => $this->imagen,
                 'costo' => $this->costo,
             ]);
+
+            foreach ($this->ingrediente_id as $value) {
+                PizzaIngredienteModel::updateOrCreate(['id' => $this->pizza_id], [
+                    'extra' => $this->extra,
+                    'valor' => $this->valor,
+                    'pizza_id' => $this->pizza_id,
+                    'ingrediente_id' => $value[0],
+                ]);
+            } 
 
             session()->flash('message', $this->pizza_id ? 'Pizza updated.' : 'Pizza created.');
 
             $this->closeModalPopover();
             $this->resetCreateForm();
-
+            DB::commit();
         } catch (\Exception $e) {
             session()->flash('message', $e);
             DB::rollback();

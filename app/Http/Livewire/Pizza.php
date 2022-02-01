@@ -64,6 +64,8 @@ class Pizza extends Component
 
             $this->closeModalPopover();
             $this->resetCreateForm();
+            DB::commit();
+
         } catch (\Exception $e) {
             session()->flash('message', $e);
             DB::rollback();

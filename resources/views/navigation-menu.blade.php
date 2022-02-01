@@ -15,12 +15,7 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="/Pizza" :active="request()->routeIs('Pizza')">
-                        {{ __('Pizza') }}
-                    </x-jet-nav-link>
-                </div>
+                </div> 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="/Ingredientes" :active="request()->routeIs('Ingredientes')">
                         {{ __('Ingredientes') }}

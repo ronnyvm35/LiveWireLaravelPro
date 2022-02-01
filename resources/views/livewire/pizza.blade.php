@@ -14,10 +14,10 @@
                 </div>
             </div>
             @endif
-            <button wire:click="create()"
+           {{--  <button wire:click="create()"
                 class="my-4 inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base font-bold text-white shadow-sm hover:bg-red-700">
                 Create Pizza
-            </button>
+            </button> --}}
             @if($isModalOpen)
             @include('livewire.pizza.create')
             @endif

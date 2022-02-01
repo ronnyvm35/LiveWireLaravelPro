@@ -42,5 +42,13 @@
         @stack('modals')
 
         @livewireScripts
+        <script type="text/javascript">
+            array = []
+            function ingrediente_click(id) { 
+                array.push(id) 
+                var jsVar = '<?php $ingredientes; ?>';
+                console.log(jsVar)
+            } 
+        </script>
     </body>
 </html>

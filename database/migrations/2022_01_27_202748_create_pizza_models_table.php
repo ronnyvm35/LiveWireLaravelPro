@@ -19,6 +19,7 @@ class CreatePizzaModelsTable extends Migration
             $table->string('descripcion');
             $table->boolean('estado');
             $table->float('costo');
+            $table->string('imagen');
             $table->timestamps();
         });
     }

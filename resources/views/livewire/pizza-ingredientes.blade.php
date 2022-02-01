@@ -26,29 +26,23 @@
                     <tr class="bg-gray-100">
                         <th class="px-4 py-2 w-20">No.</th>
                         <th class="px-4 py-2">nombre</th>
-                        <th class="px-4 py-2">descripcion</th>
-                        <th class="px-4 py-2">ingredientes</th>
+                        <th class="px-4 py-2">descripcion</th> 
                         <th class="px-4 py-2">costo</th>
                         <th class="px-4 py-2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php $id = '0'; @endphp
+                    @php $id = '1'; @endphp
                     @foreach($pizzasI as $data)
-                    @php $ingreG = ""; $idI = "0";  @endphp
+                        @php $ingreG = ""; $idI = "1";  @endphp 
                         @if ($id != $data->pizza_id)
                         <tr>
                             <td class="border px-4 py-2">{{ $data->id }}</td>
                             <td class="border px-4 py-2">{{ $data->pizza }}</td>
                             <td class="border px-4 py-2">{{ $data->descripcion}}</td>
-                            <td class="border px-4 py-2">
-                                @foreach($ingrediente as $d)
-                                    @if ($idI != $d->id)
-                                        @php $idI = $d->ingrediente_id; $ingreG = $d->nombre; @endphp
-                                        {{$ingreG . ' '}}
-                                    @endif
-                                @endforeach
-                            </td>
+                           {{--  <td class="border px-4 py-2">
+                               
+                            </td> --}}
                             <td class="border px-4 py-2">{{ $data->costo}}</td>
                             <td class="border px-4 py-2">
                                 <button wire:click="edit({{ $data->id }})"
@@ -57,7 +51,7 @@
                                     class=" px-4 py-2 bg-red-100 text-gray-900 cursor-pointer">Eliminar</button>
                             </td>
                         </tr>
-                        @php $id = $data->pizza_id; @endphp
+                        @php $id = $data->pizza_id; @endphp 
                         @endif
                     @endforeach
                 </tbody>
