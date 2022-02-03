@@ -37,7 +37,7 @@
                             <label for="exampleFormControlInput1" class="block text-gray-700 text-sm font-bold mb-2">Ingredientes</label>
                             @foreach($ingrediente as $d)    
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input"  wire:model="ingrediente_id.{{ $d->id }}" value="true" type="checkbox" id="flexSwitchCheckDefault">
+                                    <input class="form-check-input"  wire:model="ingrediente_id.{{ $d->id }}" name="ingrediente" value="{{ $d->id }}" type="checkbox" id="flexSwitchCheckDefault">
                                     <label class="form-check-label" for="flexSwitchCheckDefault">{{$d->nombre . ' '}}</label>
                                 </div>
                             @endforeach 

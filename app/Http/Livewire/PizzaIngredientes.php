@@ -60,38 +60,39 @@ class PizzaIngredientes extends Component
         $this->validate([
             'nombre' => 'required',
             'descripcion' => 'required',
-            'valor' => 'required',
-            'pizza_id' => 'required',
-            'extra' => 'required',
-            'ingrediente_id' => 'required',
-            'imagen.*' => 'image|max:1024', // 1MB Max
+            'costo' => 'required',  
+            'imagen.*' => 'image|max:10240', // 1MB Max
         ]);
         
-        $this->imagen->store('imagen');
-
+        if($this->imagen != null)
+            $this->imagen->store('imagen', 'public');
+        else
+            $this->imagen = 'pizza01.jpg';
+            
         DB::beginTransaction();
         try {
 
-            $this->imagen = json_encode($this->imagen);  
-
-            PizzaModel::updateOrCreate(['id' => $this->pizza_id], [
+             $resp = PizzaModel::updateOrCreate(['id' => $this->pizza_id], [
                 'nombre' => $this->nombre,
                 'descripcion' => $this->descripcion,
                 'estado' => true,
                 'imagen' => $this->imagen,
                 'costo' => $this->costo,
             ]);
-
-            foreach ($this->ingrediente_id as $value) {
-                PizzaIngredienteModel::updateOrCreate(['id' => $this->pizza_id], [
+            $tamanio = count($this->ingrediente_id);
+            $arrayD = array($this->ingrediente_id);
+            
+            for ($x=1; $x < $tamanio; $x++) 
+            {
+                $resp2 = PizzaIngredienteModel::create([
                     'extra' => $this->extra,
                     'valor' => $this->valor,
-                    'pizza_id' => $this->pizza_id,
-                    'ingrediente_id' => $value[0],
-                ]);
-            } 
-
-            session()->flash('message', $this->pizza_id ? 'Pizza updated.' : 'Pizza created.');
+                    'pizza_id' => $resp->id,
+                    'ingrediente_id' => $arrayD[0],
+                ]); 
+            }  
+            session()->flash('message', true );
+           //session()->flash('message', $this->pizza_id ? 'Pizza updated.' : 'Pizza created.');
 
             $this->closeModalPopover();
             $this->resetCreateForm();
@@ -114,6 +115,7 @@ class PizzaIngredientes extends Component
         ->join('ingredientes_models', 'pizza_ingrediente_models.ingrediente_id', '=', 'ingredientes_models.id')
         ->orderBy('pizza_ingrediente_models.ingrediente_id', 'asc')
         ->findOrFail($id);
+
         $this->id = $id;
         $this->pizza_id = $pizza->pizza_id;
         $this->nombre = $pizza->pizza;
