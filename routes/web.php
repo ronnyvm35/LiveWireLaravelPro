@@ -6,6 +6,7 @@ use App\Http\Livewire\Pizza;
 use App\Http\Livewire\Ingredientes;
 use App\Http\Livewire\PizzaIngredientes;
 use App\Http\Livewire\CompraList;
+use App\Http\Livewire\ProductosList;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,6 @@ Route::get('/Pizza', Pizza::class)->middleware('auth');
 Route::get('/Ingredientes', Ingredientes::class)->middleware('auth');
 
 Route::get('/Compra', CompraList::class)->middleware('auth');
+Route::get('/productos-list', ProductosList::class)->middleware('auth'); 
 
+ 

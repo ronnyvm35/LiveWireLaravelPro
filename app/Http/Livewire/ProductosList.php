@@ -6,11 +6,15 @@ use Livewire\Component;
 use App\Models\PizzaIngredienteModel;
 use App\Models\PizzaModel;
 use App\Models\IngredientesModel;
+use App\Models\PedidosModel;
+use Illuminate\Support\Facades\DB;
+use DateTime;
+use Auth;
 
 class ProductosList extends Component
 {
-    public $pizza, $extra, $valor , $pizzasI,  $imagenEdit,  $pizza_id, $ingrediente_id, $estado, $pi_id, $costo, $imagen, $ingredientes;
-    public $isModalOpen = 0;
+    public $pizza, $extra, $valor ,$valorCal , $pizzasI,  $imagenEdit,  $pizza_id, $cantidad, $ingrediente_id, $estado, $pi_id, $costo, $imagen, $ingredientes;
+    public $isModalOpen = false;
 
     public function render()
     {
@@ -45,6 +49,7 @@ class ProductosList extends Component
         $this->descripcion = '';
         $this->valor = '';
         $this->pizza_id = '';
+        $this->cantidad = '';
         $this->extra = false;
         $this->ingrediente_id = '';
     }
@@ -60,9 +65,47 @@ class ProductosList extends Component
         $this->id = $id; 
         $this->nombre = $pizza->pizza;
         $this->descripcion = $pizza->descripcion;
-        $this->valor = $pizza->valor; 
-        $this->imagenEdit = null;
+        $this->valor = $pizza->costo; 
+        $this->imagenEdit = $pizza->imagen; 
+        $this->pizza_id = $id; 
         $this->openModalPopover();
+    }
+
+    public function changeValor($value)
+    {
+        if ($value !=null) {
+            $this->valorCal = $this->valor * $value;
+        } 
+    }
+   
+    public function store()
+    { 
+        $this->validate([
+            'cantidad' => 'required', 
+        ]);
+         
+            $pizza = PizzaModel::findOrFail($this->pizza_id);
+             
+            $idUser = auth()->id();
+            
+            $now = new DateTime();
+            $total = $this->cantidad * $pizza->costo;
+
+            $resp = PedidosModel::create([
+                'user_id' => $idUser,
+                'fecha' => $now->format('Y-m-d'),
+                'hora' => $now->format('H:i:s'),
+                'pizza_id' =>  $this->pizza_id,
+                'cantidad' =>  $this->cantidad,
+                'costo' => $total,
+            ]);
+
+            $this->isModalOpen = false;
+            $this->cantidad = '';
+
+            session()->flash('message', 'Pizza created.'.$resp); 
+          
+       
     }
 
 }

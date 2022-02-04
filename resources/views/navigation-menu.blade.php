@@ -25,7 +25,7 @@
                 @else
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="/Compra" :active="request()->routeIs('/Compra')">
-                            {{ __('Compra') }}
+                            {{ __('Compras') }}
                         </x-jet-nav-link>
                     </div>
                 @endif

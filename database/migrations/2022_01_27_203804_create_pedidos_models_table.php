@@ -19,6 +19,7 @@ class CreatePedidosModelsTable extends Migration
             $table->date('fecha')->nullable();
             $table->float('costo')->nullable();
             $table->time('hora')->nullable();
+            $table->integer('cantidad')->nullable();
             $table->timestamps();
 
             $table->integer('pizza_id')->unsigned();
