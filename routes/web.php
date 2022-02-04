@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Pizza;
 use App\Http\Livewire\Ingredientes;
 use App\Http\Livewire\PizzaIngredientes;
+use App\Http\Livewire\CompraList;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,15 +18,17 @@ use App\Http\Livewire\PizzaIngredientes;
 |
 */
 Auth::routes();
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
 
 Route::any('/', function () {
     return view('dashboard');
 })->middleware('auth');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
 Route::get('/Pizza', Pizza::class)->middleware('auth');
 Route::get('/Ingredientes', Ingredientes::class)->middleware('auth');
 
-Route::get('/ArmaTuPizza', PizzaIngredientes::class)->middleware('auth');
+Route::get('/Compra', CompraList::class)->middleware('auth');
+

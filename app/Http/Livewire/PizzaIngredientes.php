@@ -88,7 +88,7 @@ class PizzaIngredientes extends Component
                     'extra' => $this->extra,
                     'valor' => $this->valor,
                     'pizza_id' => $resp->id,
-                    'ingrediente_id' => $arrayD[0],
+                    'ingrediente_id' => 1,
                 ]); 
             }  
             session()->flash('message', true );

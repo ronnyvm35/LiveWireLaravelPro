@@ -34,11 +34,13 @@
 
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 mr-4" href="{{ route('password.request') }}">
+                        {{ __('Forgot your password? ') }}
                     </a>
                 @endif
-
+                 
+                    <a href="{{ route('register') }}" class="items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-0.5 md:text-lg md:px-3"> Register </a>
+               
                 <x-jet-button class="ml-4">
                     {{ __('Log in') }}
                 </x-jet-button>

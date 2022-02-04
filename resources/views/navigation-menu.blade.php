@@ -15,17 +15,21 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                </div> 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="/Ingredientes" :active="request()->routeIs('Ingredientes')">
-                        {{ __('Ingredientes') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="/ArmaTuPizza" :active="request()->routeIs('ArmaTuPizza')">
-                        {{ __('Arma tu pizza') }}
-                    </x-jet-nav-link>
-                </div>
+                </div>  
+                @if ( auth()->user()->role == 'admin' )
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="/Pizza" :active="request()->routeIs('Pizza')">
+                            {{ __('Pizza') }}
+                        </x-jet-nav-link>
+                    </div>
+                @else
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="/Compra" :active="request()->routeIs('/Compra')">
+                            {{ __('Compra') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+               
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
